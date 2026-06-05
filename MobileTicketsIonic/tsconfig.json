@@ -1,9 +1,17 @@
+<<<<<<< HEAD
+=======
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+>>>>>>> fb4352a1e568dc8b01e92513b802d37719b2b312
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+<<<<<<< HEAD
+=======
+    "esModuleInterop": true,
+>>>>>>> fb4352a1e568dc8b01e92513b802d37719b2b312
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -11,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
+<<<<<<< HEAD
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
@@ -19,6 +28,16 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"]
+=======
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "es2020",
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "useDefineForClassFields": false
+>>>>>>> fb4352a1e568dc8b01e92513b802d37719b2b312
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
