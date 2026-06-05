@@ -1,0 +1,182 @@
+.painel-content {
+  --background: #0d1117;
+  --color: #ffffff;
+}
+
+.hora-atual {
+  color: #aaa;
+  font-size: 14px;
+  padding-right: 12px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 16px 16px 8px;
+  margin: 0;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.guiches-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 0 16px 16px;
+
+  .guiche-item {
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 2px solid transparent;
+
+    &.livre {
+      background: rgba(var(--ion-color-success-rgb), 0.1);
+      border-color: var(--ion-color-success);
+    }
+
+    &.ocupado {
+      background: rgba(var(--ion-color-warning-rgb), 0.1);
+      border-color: var(--ion-color-warning);
+    }
+
+    .guiche-numero {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    .guiche-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+
+      ion-icon {
+        font-size: 14px;
+      }
+    }
+
+    .guiche-senha {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 4px;
+      font-family: monospace;
+    }
+  }
+}
+
+.chamadas-section {
+  padding-bottom: 24px;
+}
+
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 16px;
+  color: #555;
+
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+.chamadas-lista {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.senha-chamada {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1a1f2e;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #2a2f40;
+  transition: all 0.3s ease;
+
+  &.destaque {
+    background: #1e2a4a;
+    border-color: var(--ion-color-primary);
+    box-shadow: 0 0 20px rgba(var(--ion-color-primary-rgb), 0.3);
+
+    .senha-num {
+      font-size: 22px;
+      color: #fff;
+    }
+  }
+
+  .senha-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .tipo-badge {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+
+    .senha-num {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: monospace;
+      color: #ccc;
+    }
+  }
+
+  .senha-right {
+    text-align: right;
+
+    .senha-guiche {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: #aaa;
+      justify-content: flex-end;
+
+      ion-icon {
+        font-size: 14px;
+      }
+    }
+
+    .senha-tipo-label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+  }
+
+  .destaque-label {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: var(--ion-color-primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+}

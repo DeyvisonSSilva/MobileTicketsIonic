@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      <ion-icon name="tv-outline"></ion-icon>
+      Painel de Chamadas
+    </ion-title>
+    <ion-note slot="end" class="hora-atual">{{ horaAtual | date:'HH:mm:ss' }}</ion-note>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="painel-content">
+
+  <!-- Status dos Guichês -->
+  <div class="guiches-section">
+    <h3 class="section-title">
+      <ion-icon name="business-outline"></ion-icon>
+      Status dos Guichês
+    </h3>
+    <div class="guiches-grid">
+      <div class="guiche-item" *ngFor="let guiche of guiches"
+           [class.ocupado]="!guiche.disponivel"
+           [class.livre]="guiche.disponivel">
+        <div class="guiche-numero">Guichê {{ guiche.numero }}</div>
+        <div class="guiche-status">
+          <ion-icon [name]="guiche.disponivel ? 'checkmark-circle' : 'time-outline'"></ion-icon>
+          {{ guiche.disponivel ? 'Livre' : 'Em atendimento' }}
+        </div>
+        <div class="guiche-senha" *ngIf="guiche.senhaAtual">
+          {{ guiche.senhaAtual.numeracao }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Últimas 5 senhas chamadas -->
+  <div class="chamadas-section">
+    <h3 class="section-title">
+      <ion-icon name="megaphone-outline"></ion-icon>
+      Últimas Senhas Chamadas
+    </h3>
+
+    <div *ngIf="ultimasChamadas.length === 0" class="vazio">
+      <ion-icon name="hourglass-outline"></ion-icon>
+      <p>Nenhuma senha chamada ainda</p>
+    </div>
+
+    <div class="chamadas-lista" *ngIf="ultimasChamadas.length > 0">
+      <div class="senha-chamada" *ngFor="let senha of ultimasChamadas; let i = index"
+           [class.destaque]="i === 0">
+        <div class="senha-left">
+          <ion-badge [color]="getTipoCor(senha.tipo)" class="tipo-badge">
+            {{ senha.tipo }}
+          </ion-badge>
+          <span class="senha-num">{{ senha.numeracao }}</span>
+        </div>
+        <div class="senha-right">
+          <div class="senha-guiche">
+            <ion-icon name="business-outline"></ion-icon>
+            Guichê {{ senha.guiche }}
+          </div>
+          <div class="senha-tipo-label">{{ getTipoLabel(senha.tipo) }}</div>
+        </div>
+        <div class="destaque-label" *ngIf="i === 0">AGORA</div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

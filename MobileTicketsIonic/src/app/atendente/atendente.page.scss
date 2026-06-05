@@ -1,0 +1,68 @@
+.ultima-chamada {
+  background: rgba(var(--ion-color-primary-rgb), 0.1);
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+
+  .ultima-label {
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    margin: 0 0 6px;
+  }
+
+  .ultima-senha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .num {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    .guiche {
+      font-size: 14px;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.chamar-container {
+  margin-bottom: 16px;
+
+  .chamar-btn {
+    height: 64px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.filas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+
+  .fila-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    background: var(--ion-color-light);
+    border-radius: 10px;
+    text-align: center;
+
+    .fila-count {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .fila-label {
+      font-size: 11px;
+      color: var(--ion-color-medium);
+    }
+  }
+}

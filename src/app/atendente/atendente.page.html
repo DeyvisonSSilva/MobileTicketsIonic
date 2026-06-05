@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="person-outline"></ion-icon>
+      Painel do Atendente
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="resetarDia()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Última senha chamada -->
+  <div class="ultima-chamada" *ngIf="ultimaChamada">
+    <p class="ultima-label">Última chamada:</p>
+    <div class="ultima-senha">
+      <ion-badge [color]="getTipoCor(ultimaChamada.tipo)">{{ ultimaChamada.tipo }}</ion-badge>
+      <span class="num">{{ ultimaChamada.numeracao }}</span>
+      <span class="guiche">→ Guichê {{ ultimaChamada.guiche }}</span>
+    </div>
+  </div>
+
+  <!-- Botão principal -->
+  <div class="chamar-container">
+    <ion-button
+      expand="block"
+      size="large"
+      color="primary"
+      class="chamar-btn"
+      (click)="chamarProximo()"
+      [disabled]="chamando || !temGuicheDisponivel">
+      <ion-icon name="megaphone-outline" slot="start"></ion-icon>
+      {{ chamando ? 'Chamando...' : 'Chamar Próximo' }}
+    </ion-button>
+  </div>
+
+  <!-- Filas de espera -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Filas de Espera</ion-card-title>
+      <ion-card-subtitle>Total: {{ totalFila }} pessoa(s)</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="filas-grid">
+        <div class="fila-item fila-sp">
+          <ion-badge color="danger">SP</ion-badge>
+          <span class="fila-count">{{ filas.SP.length }}</span>
+          <span class="fila-label">Prioritários</span>
+        </div>
+        <div class="fila-item fila-se">
+          <ion-badge color="success">SE</ion-badge>
+          <span class="fila-count">{{ filas.SE.length }}</span>
+          <span class="fila-label">Exames</span>
+        </div>
+        <div class="fila-item fila-sg">
+          <ion-badge color="primary">SG</ion-badge>
+          <span class="fila-count">{{ filas.SG.length }}</span>
+          <span class="fila-label">Geral</span>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Guichês -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Guichês</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let guiche of guiches" lines="full">
+          <ion-icon
+            [name]="guiche.disponivel ? 'checkmark-circle' : 'time'"
+            [color]="guiche.disponivel ? 'success' : 'warning'"
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>Guichê {{ guiche.numero }}</h3>
+            <p *ngIf="guiche.senhaAtual">
+              Atendendo: {{ guiche.senhaAtual.numeracao }}
+            </p>
+            <p *ngIf="guiche.disponivel">Disponível</p>
+          </ion-label>
+          <ion-button
+            slot="end"
+            fill="outline"
+            color="medium"
+            size="small"
+            *ngIf="!guiche.disponivel"
+            (click)="finalizarManual(guiche.numero)">
+            Finalizar
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

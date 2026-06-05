@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="ticket-outline"></ion-icon>
+      Totem de Senhas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="status-expediente" [class.ativo]="expedienteAtivo" [class.inativo]="!expedienteAtivo">
+    <ion-icon [name]="expedienteAtivo ? 'checkmark-circle' : 'close-circle'"></ion-icon>
+    <span>{{ expedienteAtivo ? 'Atendimento em funcionamento (07h - 17h)' : 'Fora do horário de atendimento' }}</span>
+  </div>
+
+  <div class="totem-container">
+    <div class="totem-header">
+      <ion-icon name="medical-outline" class="logo-icon"></ion-icon>
+      <h1>Laboratório Médico</h1>
+      <p>Selecione o tipo de atendimento</p>
+    </div>
+
+    <div class="botoes-senha">
+
+      <ion-card class="senha-card prioritaria" (click)="emitirSenha('SP')" [class.disabled]="!expedienteAtivo">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="star" color="danger"></ion-icon>
+          </div>
+          <h2>Prioritário</h2>
+          <p>Idosos, gestantes, PCD e outros</p>
+          <ion-badge color="danger">SP</ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="senha-card geral" (click)="emitirSenha('SG')" [class.disabled]="!expedienteAtivo">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="people" color="primary"></ion-icon>
+          </div>
+          <h2>Atendimento Geral</h2>
+          <p>Consultas e atendimentos comuns</p>
+          <ion-badge color="primary">SG</ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="senha-card exames" (click)="emitirSenha('SE')" [class.disabled]="!expedienteAtivo">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="document-text" color="success"></ion-icon>
+          </div>
+          <h2>Retirada de Exames</h2>
+          <p>Buscar resultados de exames</p>
+          <ion-badge color="success">SE</ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+  </div>
+
+  <!-- Modal de senha emitida -->
+  <ion-modal [isOpen]="mostrarSenha" (didDismiss)="fecharSenha()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar [color]="ultimaSenhaEmitida ? getTipoCor(ultimaSenhaEmitida.tipo) : 'primary'">
+          <ion-title>Sua Senha</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="fecharSenha()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" *ngIf="ultimaSenhaEmitida">
+        <div class="senha-display">
+          <div class="senha-numero">{{ ultimaSenhaEmitida.numeracao }}</div>
+          <div class="senha-tipo">
+            <ion-badge [color]="getTipoCor(ultimaSenhaEmitida.tipo)" class="tipo-badge">
+              {{ getTipoDescricao(ultimaSenhaEmitida.tipo) }}
+            </ion-badge>
+          </div>
+          <p class="senha-info">Aguarde ser chamado no painel</p>
+          <p class="senha-hora">Emitida às {{ ultimaSenhaEmitida.dataHoraEmissao | date:'HH:mm:ss' }}</p>
+
+          <div *ngIf="ultimaSenhaEmitida.status === 'DESCARTADA'" class="aviso-descarte">
+            <ion-icon name="warning-outline" color="warning"></ion-icon>
+            <p>Senha descartada — cliente não aguardou atendimento.</p>
+          </div>
+        </div>
+        <ion-button expand="block" [color]="getTipoCor(ultimaSenhaEmitida.tipo)" (click)="fecharSenha()">
+          Fechar
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="bar-chart-outline"></ion-icon>
+      Relatórios
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="gerarRelatorio()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="relatorio">
+
+  <p class="data-relatorio">
+    <ion-icon name="calendar-outline"></ion-icon>
+    Gerado em: {{ dataRelatorio | date:'dd/MM/yyyy HH:mm:ss' }}
+  </p>
+
+  <!-- Resumo geral -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Resumo Geral</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="resumo-grid">
+        <div class="resumo-item">
+          <span class="resumo-valor">{{ relatorio.totalEmitidas }}</span>
+          <span class="resumo-label">Emitidas</span>
+        </div>
+        <div class="resumo-item success">
+          <span class="resumo-valor">{{ relatorio.totalAtendidas }}</span>
+          <span class="resumo-label">Atendidas</span>
+        </div>
+        <div class="resumo-item danger">
+          <span class="resumo-valor">{{ relatorio.totalDescartadas }}</span>
+          <span class="resumo-label">Descartadas</span>
+        </div>
+        <div class="resumo-item primary">
+          <span class="resumo-valor">{{ taxaAtendimento }}%</span>
+          <span class="resumo-label">Taxa</span>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Por tipo de senha -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Por Tipo de Senha</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-badge color="danger" slot="start">SP</ion-badge>
+          <ion-label>
+            <h3>Prioritário</h3>
+            <p>Emitidas: {{ relatorio.porTipo.SP.emitidas }} | Atendidas: {{ relatorio.porTipo.SP.atendidas }}</p>
+            <p>TM médio: {{ relatorio.tmMedio.SP | number:'1.1-1' }} min</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-badge color="success" slot="start">SE</ion-badge>
+          <ion-label>
+            <h3>Retirada de Exames</h3>
+            <p>Emitidas: {{ relatorio.porTipo.SE.emitidas }} | Atendidas: {{ relatorio.porTipo.SE.atendidas }}</p>
+            <p>TM médio: {{ relatorio.tmMedio.SE | number:'1.1-1' }} min</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-badge color="primary" slot="start">SG</ion-badge>
+          <ion-label>
+            <h3>Geral</h3>
+            <p>Emitidas: {{ relatorio.porTipo.SG.emitidas }} | Atendidas: {{ relatorio.porTipo.SG.atendidas }}</p>
+            <p>TM médio: {{ relatorio.tmMedio.SG | number:'1.1-1' }} min</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Relatório detalhado -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Relatório Detalhado</ion-card-title>
+      <ion-button fill="clear" size="small" (click)="toggleDetalhes()">
+        {{ mostrarDetalhes ? 'Ocultar' : 'Exibir' }}
+        <ion-icon [name]="mostrarDetalhes ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+      </ion-button>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="mostrarDetalhes">
+      <div *ngIf="relatorio.senhas.length === 0" class="sem-dados">
+        Nenhuma senha registrada.
+      </div>
+      <ion-list lines="full" *ngIf="relatorio.senhas.length > 0">
+        <ion-item *ngFor="let senha of relatorio.senhas">
+          <ion-badge [color]="senha.tipo === 'SP' ? 'danger' : senha.tipo === 'SE' ? 'success' : 'primary'" slot="start">
+            {{ senha.tipo }}
+          </ion-badge>
+          <ion-label>
+            <h3>{{ senha.numeracao }}</h3>
+            <p>Emissão: {{ senha.dataHoraEmissao | date:'HH:mm:ss' }}</p>
+            <p *ngIf="senha.dataHoraAtendimento">
+              Atendimento: {{ senha.dataHoraAtendimento | date:'HH:mm:ss' }}
+              | Guichê: {{ senha.guiche }}
+            </p>
+          </ion-label>
+          <ion-badge slot="end"
+            [color]="senha.status === 'ATENDIDA' ? 'success' : senha.status === 'DESCARTADA' ? 'danger' : 'warning'">
+            {{ senha.status }}
+          </ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-content *ngIf="!relatorio" class="ion-padding">
+  <div class="sem-dados-full">
+    <ion-icon name="document-outline"></ion-icon>
+    <p>Nenhum dado disponível</p>
+  </div>
+</ion-content>
